@@ -16,7 +16,7 @@ class Solution:
 
         left = 0
         cnt = 0
-        # Then by left
+        # Then by False
         for right in range(len(answerKey)):
             while cnt > k:
                 if answerKey[left] == 'T':
