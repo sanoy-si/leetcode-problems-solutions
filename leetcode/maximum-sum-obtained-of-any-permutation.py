@@ -1,22 +1,22 @@
 class Solution:
     def maxSumRangeQuery(self, nums: List[int], requests: List[List[int]]) -> int:
-
-        arr = [0 for i in range(len(nums))]
+        freq = [0] * (len(nums) + 1)
         for left, right in requests:
-            arr[left] += 1
-            if right < len(nums) - 1:
-                arr[right + 1] -= 1
-
-        prefix = []
+            freq[left] += 1
+            freq[right + 1] -= 1
+        
         accumulator = 0
-        for num in arr:
-            accumulator += num
-            prefix.append(accumulator)
-
-        prefix.sort(reverse=True)
+        for i in range(len(freq)):
+            accumulator += freq[i]
+            freq[i] = accumulator
+        
+        freq.sort()
         nums.sort()
+
         ans = 0
-        for num in prefix:
-            ans +=  (num * nums.pop())
+        while nums:
+            ans += (nums.pop() * freq.pop())
         
         return int(ans % (1e9 + 7))
+
+       
