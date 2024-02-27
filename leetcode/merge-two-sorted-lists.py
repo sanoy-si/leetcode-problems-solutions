@@ -1,32 +1,44 @@
 # Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
+class Node:
+    def __init__(self, val=0, next=None, prev = None):
+        self.val = val
+        self.next = next
+        self.prev = prev
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        head = ListNode()
-        curr = head
-        while list1 and list2:
-            if list1.val > list2.val:
-                curr.next = ListNode(list2.val)
-                list2 = list2.next
-                curr = curr.next
-            else:
-                curr.next = ListNode(list1.val)
-                list1 = list1.next
-                curr = curr.next
+        head = Node()
+        tail = Node(prev = head)
+        head.next = tail
 
-        while list1:
-            curr.next = ListNode(list1.val)
-            curr = curr.next
-            list1 = list1.next
+        def merge(tail, list1, list2):
+            if not list1 and not list2:
+                return 
+                
+            if list1 and list2:
+                if list1.val <= list2.val:
+                    new = Node(list1.val)
+                    list1 = list1.next
+                    
+                else:
+                    new = Node(list2.val)
+                    list2 = list2.next
+            else:
+                if list1:
+                    new = Node(list1.val)
+                    list1 = list1.next
+                else:
+                    new = Node(list2.val)
+                    list2 = list2.next
+
+            new.next = tail
+            new.prev = tail.prev
+
+            tail.prev.next = new
+            tail.prev = new
+
+            merge(tail, list1, list2)
         
-        while list2:
-            curr.next = ListNode(list2.val)
-            curr = curr.next
-            list2 = list2.next
-        
+        merge(tail, list1, list2)
+        tail.prev.next = None
+
         return head.next
-         
-        
