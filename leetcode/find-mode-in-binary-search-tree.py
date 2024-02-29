@@ -7,10 +7,11 @@
 class Solution:
     def findMode(self, root: Optional[TreeNode]) -> List[int]:
         counter = Counter()
+        
         def dfs(node):
             if not node:
                 return 
-                
+
             counter[node.val] += 1
 
             dfs(node.left)
