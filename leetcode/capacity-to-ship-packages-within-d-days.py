@@ -2,17 +2,17 @@ class Solution:
     def shipWithinDays(self, weights: List[int], days: int) -> int:
         
         def is_valid(capacity):
-            count = 1
-            current = 0
+            day_count = 1
+            current_total = 0
 
             for weight in weights:
 
-                current = current + weight
-                if current > capacity:
-                    count += 1
-                    current = weight
+                current_total = current_total + weight
+                if current_total > capacity:
+                    day_count += 1
+                    current_total = weight
 
-                if count > days:
+                if day_count > days:
                     return False
             
             return True
