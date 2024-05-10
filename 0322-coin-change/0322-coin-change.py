@@ -3,31 +3,24 @@ class Solution:
         memory = {0:0}
 
         def dp(curr_amount):
-
+            
             if curr_amount < 0:
-                return -1
-
+                return inf
 
             if curr_amount not in memory:
 
                 curr_count = inf
-
                 for coin in coins:
-                    response = dp(curr_amount - coin)
+                    curr_count = min(dp(curr_amount - coin) + 1 , curr_count)  
 
-                    if response != -1:
-                        curr_count = min(response + 1 , curr_count)  
-
-                if curr_count != inf:
-                    memory[curr_amount] = curr_count
-
-                else:
-                    memory[curr_amount] = -1 
+                memory[curr_amount] = curr_count
 
             return memory[curr_amount]
 
-        return dp(amount)               
 
+        answer = dp(amount)            
+
+        return answer if answer != inf else -1
                 
 
             
