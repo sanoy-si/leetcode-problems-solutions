@@ -4,7 +4,6 @@ class Solution:
 
         inbound = lambda row, col: 0 <= row < m and 0 <= col < n
 
-
         def dp(row, col):
             if (row, col) == (m - 1, n - 1):
                 return 1
