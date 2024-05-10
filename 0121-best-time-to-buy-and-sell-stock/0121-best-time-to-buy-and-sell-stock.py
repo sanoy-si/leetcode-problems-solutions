@@ -1,14 +1,10 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        stack = []
-        ma = 0
+        answer = 0
+        smallest_price = inf
+
         for price in prices:
-            while stack and stack[-1] > price:
-                stack.pop()
-            if stack:
-                ma = max(ma,price - stack[-1])
-            else:
-                stack.append(price)
-        return ma
-            
+            answer = max(answer, price - smallest_price)
+            smallest_price = min(smallest_price, price)
         
+        return answer
