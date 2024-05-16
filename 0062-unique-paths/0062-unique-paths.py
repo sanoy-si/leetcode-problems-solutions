@@ -1,19 +1,12 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        memory = {}
+        dp = [[1 for _ in range(m)] for _ in range(n)]
 
-        inbound = lambda row, col: 0 <= row < m and 0 <= col < n
-
-        def dp(row, col):
-            if (row, col) == (m - 1, n - 1):
-                return 1
-            
-            if not inbound(row, col):
-                return False
-            
-            if (row, col) not in memory:
-                memory[(row, col)] = dp(row + 1, col) + dp(row, col + 1)
-            
-            return memory[(row, col)]
+        for i in range(1, n):
+            for j in range(1, m):
+                dp[i][j] = dp[i][j - 1] + dp[i - 1][j]
         
-        return dp(0, 0)
+        return dp[n - 1][m - 1]
+        
+        
+
