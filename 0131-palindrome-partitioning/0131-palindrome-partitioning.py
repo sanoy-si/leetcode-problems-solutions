@@ -1,22 +1,15 @@
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
         
-        memo = [[-1 for _ in range(len(s))] for _ in range(len(s))]
+        memo = [[False for _ in range(len(s))] for _ in range(len(s))]
         def is_palindrome(left, right):
-            if left == right:
-                return True
-            
-            if left == right - 1:
-                return s[left] == s[right]
-            
-            if memo[left][right] == -1:
-                if s[left] == s[right]:
-                    memo[left][right] = is_palindrome(left + 1, right - 1)
-                
-                else:
-                    memo[left][right] = False
-            
-            return memo[left][right]
+            while left < right:
+                if s[left] != s[right]:
+                    return False
+                left += 1
+                right -= 1
+
+            return True
 
             
             
