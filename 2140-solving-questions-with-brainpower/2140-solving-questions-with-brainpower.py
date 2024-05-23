@@ -1,7 +1,7 @@
 class Solution:
     def mostPoints(self, questions: List[List[int]]) -> int:
         memo = {}
-        answer = 0
+
         def dp(idx):
             if idx >= len(questions):
                 return 0
