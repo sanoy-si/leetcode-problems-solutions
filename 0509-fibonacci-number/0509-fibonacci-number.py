@@ -1,14 +1,10 @@
 class Solution:
 
     def fib(self, n: int) -> int:
-        memory = {0:0, 1:1}
+        dp = [0 for _ in range(n + 2)]
+        dp[0], dp[1] = 0, 1
 
-        def func(n):
-            if n in memory:
-                return memory[n]
-            
-            memory[n] = func(n - 1) + func(n - 2)
-            
-            return memory[n]
-        
-        return func(n)
+        for i in range(2, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2]
+
+        return dp[n]
