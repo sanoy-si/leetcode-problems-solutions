@@ -33,12 +33,14 @@ class Solution:
             for i, child in enumerate(node.children):
                 if child and child.is_end:
                     word.append(chr(97 + i))
+
+                    if len(answer) < len(word):
+                        answer = word[:] 
+                    
                     dfs(child, word[:])
+                    
                     word.pop()
                 
-                else:
-                    if len(answer) < len(word):
-                        answer = word 
                     
         
         dfs(trie.root, [])
