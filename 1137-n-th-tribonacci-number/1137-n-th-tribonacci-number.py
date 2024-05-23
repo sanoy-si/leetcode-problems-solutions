@@ -1,12 +1,11 @@
 class Solution:
     def tribonacci(self, n: int) -> int:
-        memory = {0:0, 1:1, 2:1}
+        dp = [0 for _ in range(n + 3)]
+        dp[0], dp[1], dp[2] = 0, 1, 1
 
-        def find_tribonacci(n):
-            if n not in memory:
-                memory[n] = find_tribonacci(n - 1) + find_tribonacci(n - 2) + find_tribonacci(n - 3)
-            
-            return memory[n]
+        for i in range(3, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3]
 
-        return find_tribonacci(n)
+        return dp[n] 
+
             
