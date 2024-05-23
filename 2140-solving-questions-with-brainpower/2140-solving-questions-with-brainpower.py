@@ -1,18 +1,17 @@
 class Solution:
     def mostPoints(self, questions: List[List[int]]) -> int:
-        memo = {}
+        dp = [0 for _ in range(len(questions))]
+        dp[-1] = questions[-1][0]
 
-        def dp(idx):
-            if idx >= len(questions):
-                return 0
+        for i in range(len(questions) - 2, -1, -1):
+            if i + questions[i][1] + 1 < len(dp):
+                take = questions[i][0] + dp[i + questions[i][1] + 1]
+            else:
+                take = questions[i][0]
             
-            if idx not in memo:    
-                take = questions[idx][0] + dp(idx + questions[idx][1] + 1)
-                dont_take = dp(idx + 1)
+            dont_take =dp[i + 1]
 
-                memo[idx] = max(take, dont_take)
+            dp[i] = max(take, dont_take)
 
-            return memo[idx]
-        
-        return dp(0)
+        return dp[0]
 
