@@ -1,19 +1,18 @@
 class Solution:
     def minOperations(self, nums: List[int], x: int) -> int:
-        target = sum(nums) - x
         left = 0
-        ma = -1
-        curr = 0
+        curr_sum = 0
+        max_len = 0
+        target = sum(nums) - x
 
         for right in range(len(nums)):
-            curr += nums[right]
+            curr_sum += nums[right]
 
-            while curr > target and left <= right:
-                curr -= nums[left]
+            while left < right and curr_sum > target:
+                curr_sum -= nums[left]
                 left += 1
             
-            if curr == target: ma = max(ma,right - left + 1)
-        
-        return len(nums) - ma if ma != -1 else ma
+            if curr_sum == target:
+                max_len = max(max_len, right - left + 1)
 
-        
+        return len(nums) - max_len if max_len else -1
