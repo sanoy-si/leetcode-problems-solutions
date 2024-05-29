@@ -1,7 +1,7 @@
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
         answer = 0
-        for i in range(31):
+        for i in range(32):
             count = 0
             for num in nums:
                 if num & 1 << i:
@@ -16,7 +16,7 @@ class Solution:
         else:
             ans = []
             
-            for i in range(31):
+            for i in range(32):
                 if answer & 1 << i:
                     ans.append('0')
                 
