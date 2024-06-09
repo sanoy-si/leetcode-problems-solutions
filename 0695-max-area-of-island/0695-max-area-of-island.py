@@ -1,27 +1,32 @@
 class Solution:
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        m = len(grid)
-        n = len(grid[0])
-        ma = 0
-        self.visited = set()
-
-        def dfs(i,j,c):
-            if (i,j) in self.visited  or 0>i or i>= m or 0 > j or j >= n or not grid[i][j]:return 0
-            self.visited.add((i,j))
-            c+=1
-            c+=dfs(i,j+1,0)
-            c+=dfs(i,j-1,0)
-            c+=dfs(i+1,j,0)
-            c+=dfs(i-1,j,0)
-            return c
-
-
-        for i in range(m):
-            for j in range(n):
-                if (i,j) not in self.visited and grid[i][j]:
-                    ma = max(ma,dfs(i,j,0))
+        visited = set()
+        def in_bound(i, j):
+            return 0 <= i < len(grid) and 0 <= j < len(grid[0])
         
+        dirns = ((0, 1), (0, -1), (1, 0), (-1, 0))
+        def dfs(i, j):
+            stack = [(i, j)]
+            answer = 0
+            while stack:
+                i, j = stack.pop()
+                if (i, j) in visited:
+                    continue
+                
+                visited.add((i, j))
+                answer += 1
 
-        return ma
-
+                for d_i, d_j in dirns:
+                    new_i, new_j = i + d_i, j + d_j
+                    if in_bound(new_i, new_j) and (new_i, new_j) not in visited and grid[new_i][new_j]:
+                        stack.append((new_i, new_j))
+            
+            return answer
+            
+        answer = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if (i, j) not in visited and grid[i][j]:
+                    answer = max(answer, dfs(i, j))
         
+        return answer
