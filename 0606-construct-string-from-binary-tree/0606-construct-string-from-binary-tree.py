@@ -26,11 +26,11 @@ class Solution:
                 return ['(' + str(node.val) + ''.join(left) + ')']
             
             if not left:
-                return ('(' + str(node.val) + '()' + ''.join(right) + ')')
+                return ['(' + str(node.val) + '()' + ''.join(right) + ')']
 
-            return ('(' + str(node.val) + ''.join(left) + ''.join(right) + ')')
+            return ['(' + str(node.val) + ''.join(left) + ''.join(right) + ')']
         
-        return dfs(root)[1:-1]
+        return dfs(root)[0][1:-1]
 
 
     
