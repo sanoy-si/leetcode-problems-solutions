@@ -9,8 +9,7 @@ class Solution:
             while current_cost > maxCost:
                 current_cost -= abs(ord(s[left]) - ord(t[left]))
                 left += 1
-            
+
             max_length = max(max_length, right - left + 1)
-            
-        
+
         return max_length
