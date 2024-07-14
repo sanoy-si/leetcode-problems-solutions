@@ -44,7 +44,7 @@ class Solution:
         if stack and type(stack[-1]) != int:
             stack.append(1)
         
-        print(stack)
+        stack = [element for element in stack if element not in ['(', ')']]
         counter = Counter()
         p = 0
         while p < len(stack):
