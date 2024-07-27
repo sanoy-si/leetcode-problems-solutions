@@ -1,20 +1,20 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        tp=1
-        ttp=1
+        prefix_product = [1]
+        for num in nums:
+            prefix_product.append(prefix_product[-1] * num)
+        
+        postfix_product = [1]
+        for i in range(len(nums)-1, -1, -1):
+            postfix_product.append(postfix_product[-1] * nums[i])
+        
+        postfix_product = postfix_product[::-1]
+
         answer = []
-        v=False
-        o=False
-        for i in nums:
-            if i!=0:
-                tp*=i
-            elif v:o=True
-            else:v=True
-        if v:
-            for i in nums:
-                if  i == 0 and not o: answer.append(tp)
-                else:answer.append(0)
-        else:
-            for i in nums:
-                answer.append(tp//i)
+        for i in range(len(nums)):
+            left = prefix_product[i]
+            right = postfix_product[i + 1]
+            answer.append(left * right)
+        
+
         return answer
