@@ -8,7 +8,7 @@ class Solution:
                if n % i == 0:
                 factors.add(i)
                 factors.add(n / i)
-
+     
 
             return factors
 
