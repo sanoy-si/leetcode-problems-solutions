@@ -3,7 +3,7 @@ class Robot:
     def __init__(self, width: int, height: int):
         self.width = width
         self.height = height
-        self.dirn = 'East'
+        self.direction = 'East'
         self.pos = [0,0]
         self.num_to_circle =  2 * (self.width - 1) + 2 * (self.height - 1)
         
@@ -11,48 +11,48 @@ class Robot:
     def step(self, num: int) -> None:
         num %= self.num_to_circle
         while num != 0:
-            if self.dirn == 'East':
+            if self.direction == 'East':
                 if self.pos[0] + 1 == self.width:
-                    self.dirn = 'North'
+                    self.direction = 'North'
                     continue
                 self.pos[0] += 1
                 num -= 1
 
-            elif self.dirn == 'North':
+            elif self.direction == 'North':
                 if self.pos[1] + 1 == self.height:
-                        self.dirn = 'West'
+                        self.direction = 'West'
                         continue
                 self.pos[1] += 1
                 num -= 1
             
-            elif self.dirn == 'West':
+            elif self.direction == 'West':
                 if self.pos[0] - 1 == -1:
-                        self.dirn = 'South'
+                        self.direction = 'South'
                         continue
                 self.pos[0] -= 1
                 num -= 1
 
             else:
                 if self.pos[1] - 1 == -1:
-                        self.dirn = 'East'
+                        self.direction = 'East'
                         continue
                 self.pos[1] -= 1
                 num -= 1
         
         if self.pos == [0,0]:
-            self.dirn = "South"
+            self.direction = "South"
         elif self.pos == [self.width - 1,0]:
-            self.dirn = "East"
+            self.direction = "East"
         elif self.pos == [self.width - 1,self.height - 1]:
-            self.dirn = "North"
+            self.direction = "North"
         elif self.pos == [0,self.height - 1]:
-            self.dirn = "West"
+            self.direction = "West"
 
     def getPos(self) -> List[int]:
         return self.pos
 
     def getDir(self) -> str:
-        return self.dirn
+        return self.direction
 
         
 
