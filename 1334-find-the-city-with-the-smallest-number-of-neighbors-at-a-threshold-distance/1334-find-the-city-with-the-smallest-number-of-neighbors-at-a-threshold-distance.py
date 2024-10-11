@@ -1,34 +1,19 @@
 class Solution:
     def findTheCity(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
-        graph = [[] for _ in range(n)]
+        matrix = [[inf if i != j else 0 for i in range(n)] for j in range(n)]
         for u, v, w in edges:
-            graph[u].append((v, w))
-            graph[v].append((u, w))
+            matrix[u][v] = matrix[v][u] = w
 
-        reachable_cities = {i:0 for i in range(n)}
-        def bfs(start_node):
-            visited = [False] * n
-            heap = [(0, start_node)]
-
-            while heap:
-                curr_dist, node = heappop(heap)
-                if visited[node]:
-                    continue
-
-                visited[node] = True
-                reachable_cities[start_node] += 1
-                
-                for nei, weight in graph[node]:
-                    if curr_dist + weight <= distanceThreshold and not visited[nei]:
-                        heappush(heap, (curr_dist + weight, nei))
+        for k in range(n):
+            for i in range(n):
+                for j in range(n):
+                    matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j])
         
-        for i in range(n):
-            bfs(i)
+        answer = [-1, -1]
+        for node in range(n):
+            for row in matrix[node]:
+                count = len([i for i in range(n) if matrix[node][i] <= distanceThreshold])
+                if answer[0] == -1 or answer[1] > count or answer[1] == count and node > answer[0]:
+                    answer = [node, count]
 
-        reachable_cities = list(sorted(reachable_cities.items(), key = lambda x: (x[1], -x[0])))
-        return reachable_cities[0][0]
-        
-
-            
-            
-
+        return answer[0]
