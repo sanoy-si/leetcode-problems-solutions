@@ -6,33 +6,39 @@ class Solution:
             graph[u].append(v)
 
         def add_predecessors(node):
-            visited = [False] * n
-            in_time, out_time = [-1] * n, [-1] * n
-            timer = 0
+            time_in, time_out = [-1] * n, [-1] * n
+            def dfs(start):
+                timer = 0 
+                color = [0] * n
+                stack = [start]
+                while stack:
+                    node = stack[-1]
+                    if color[node] == 0:
+                        time_in[node] = timer
+                        timer += 1
+                        color[node] = 1
 
-            def dfs(node):
-                nonlocal timer
-                in_time[node] = timer
-                timer += 1
-                for child in graph[node]:
-                    if not visited[child]:
-                        dfs(child)
-                
-                out_time[node] = timer
-                timer += 1
+                        for child in graph[node]:
+                            if color[child] == 0:
+                                stack.append(child)  
+
+                    else:
+                        stack.pop()
+                        time_out[node] = timer
+                        timer += 1
             
             dfs(node)
             for i in range(n):
-                if in_time[i] != -1 and in_time[node] < in_time[i] < out_time[i] < out_time[node]:
-                    ancestors.add((node, i))
+                if time_in[i] != -1 and time_in[node] < time_in[i] < time_out[i] < time_out[node]:
+                    is_ancestor[node][i] = True
         
-        ancestors = set()
+        is_ancestor = [[False for _ in range(n)] for _ in range(n)] 
         for node in range(n):
             add_predecessors(node)
         
         answer = []
         for ancestor, predecessor in queries:
-            answer.append((ancestor, predecessor) in ancestors)
+            answer.append(is_ancestor[ancestor][predecessor])
 
         return answer
 
