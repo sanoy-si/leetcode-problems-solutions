@@ -1,19 +1,10 @@
 class Solution:
     def minimumSteps(self, s: str) -> int:
-        s = list(s)
-        seeker = place_holder = 0
-        count = 0
-
-        while seeker < len(s):
-            if s[seeker] == '0':
-                count += seeker - place_holder
-
-                s[seeker], s[place_holder] = s[place_holder], s[seeker]
-                
-                place_holder += 1
-
-            seeker += 1
+        pos = len(s) - 1
+        answer = 0
+        for i in range(len(s) - 1, -1, -1):
+            if s[i] == '1':
+                answer += abs(pos - i)
+                pos -= 1
         
-        return count
-
-        
+        return answer
