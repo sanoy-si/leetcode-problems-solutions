@@ -7,14 +7,12 @@ class Solution:
             new = (passing + 1) / (total + 1)
             heappush(heap, (-(new - curr), i))
         
-        while extraStudents:
+        for _ in range(extraStudents):
             _, i = heappop(heap)
-            curr = classes[i][0] / classes[i][1]
             classes[i] = [classes[i][0] + 1, classes[i][1] + 1]
             curr = classes[i][0] / classes[i][1]
             new = (classes[i][0] + 1) / (classes[i][1] + 1)
             heappush(heap, (-(new - curr), i))
-            extraStudents -= 1
         
         tot = 0
         for passing, total in classes:
