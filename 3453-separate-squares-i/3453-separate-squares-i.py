@@ -1,6 +1,6 @@
 class Solution:
     def separateSquares(self, squares: List[List[int]]) -> float:
-        squares.sort(key = lambda x: x[1])
+        squares.sort(key = lambda x: x[1], reverse = True)
         total = 0
         for x, y, l in squares:
             total += l ** 2
