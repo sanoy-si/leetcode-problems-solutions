@@ -12,13 +12,8 @@ class Solution:
                 removed = max(y - yi, 0)
                 current += (max(0, li * (li - removed)))
             
-            if abs(total / 2 - current) <= 10 ** -5:
-                return 0
-
-            elif total / 2 > current:
-                return 1
-
-            return -1 
+            return total / 2 >= current
+                
         
         left = 1
         right = 10 ** 9
@@ -26,12 +21,8 @@ class Solution:
         precision = 10 ** -6
         while right - left > precision:
             mid = (left + right) / 2
-            result = check(mid)
-            if result == 0:
+            if check(mid):
                 answer = mid
-                right = mid - precision
-            
-            elif result == 1:
                 right = mid - precision
                 
             else:
